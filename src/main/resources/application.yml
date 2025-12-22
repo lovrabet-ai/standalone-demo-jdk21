@@ -1,0 +1,64 @@
+server:
+  port: 8080
+  #ssl: #默认关闭，按需开启
+    #key-store: classpath:keystore.p12
+    #key-store-password: yuntoo
+    #key-store-type: PKCS12
+    #key-alias: myapp
+
+spring:
+  application:
+    name: lovrabet-demo
+  datasource:
+    url: jdbc:mysql://rm-bp14t1q048310a2i3ro.mysql.rds.aliyuncs.com:3306/yuntoo_demo?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: yuntoo_demo
+    password: yt_123456
+  profiles:
+    active: dev # 默认dev环境
+  thymeleaf:
+    prefix: classpath:/templates/
+    template-resolver-order: 1
+    enable-spring-el-compiler: true
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+    cache: false
+
+lovrabet:
+  appCode: app-c2dd52a2
+  apiDomain: http://127.0.0.1:8080
+  rendererVersion: 1.0.98
+  appPlatformVersion: 1.5.1
+
+logging:
+  level:
+    org.springframework.web: INFO
+    root: info
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+application:
+  security:
+    jwt:
+      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      expiration: 86400000 # 24 hours
+      refresh-token:
+        expiration: 604800000 # 7 days
+
+#---- ^ mybatis-plus 配置 ----#
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  config-location: classpath:yt-mybatis-config.xml
+  global-config:
+    db-config:
+      logic-delete-field: deleted # 逻辑删除字段名
+      logic-not-delete-value: 0 # 默认值（未删除）
+      logic-delete-value: 1 # 删除值，个别场景需要用id的请在DO中单独设置
+#---- / mybatis-plus 配置 ----#

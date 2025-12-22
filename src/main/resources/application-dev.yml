@@ -1,0 +1,10 @@
+server:
+  port: 8080
+
+logging:
+  level:
+    org.springframework.web: INFO
+    # 或者开启 MyBatis 全局日志
+    org.apache.ibatis: INFO
+    # 开启 SQL 执行日志
+    org.mybatis: INFO
