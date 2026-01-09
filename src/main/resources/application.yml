@@ -27,8 +27,8 @@ spring:
 lovrabet:
   appCode: app-c2dd52a2
   apiDomain: http://127.0.0.1:8080
-  rendererVersion: 1.0.98
-  appPlatformVersion: 1.5.1
+  rendererVersion: 1.1.25
+  appPlatformVersion: 1.5.12
 
 logging:
   level:
