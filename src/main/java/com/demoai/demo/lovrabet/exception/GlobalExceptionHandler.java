@@ -34,9 +34,7 @@ import java.util.*;
 public class GlobalExceptionHandler {
     // 无权限错误码
     private static final Set<ErrorCode> NO_PERMISSION_ERROR_CODES =
-            Set.of(ErrorCode.NO_SUPER_ADMIN_PERMISSION,
-                    ErrorCode.YT_NO_PERMISSION,
-                    ErrorCode.DEVELOPER_NO_PERMISSION);
+            Set.of(ErrorCode.NO_PERMISSION);
 
     /**
      * 处理自定义业务异常

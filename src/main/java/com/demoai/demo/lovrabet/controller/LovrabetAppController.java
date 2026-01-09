@@ -34,6 +34,14 @@ public class LovrabetAppController {
         if(null == smartApp){
             return Result.success(null, "应用不存在或者无效的appCode");
         }
+        safeFilter(smartApp);
         return Result.success(smartApp, "查询成功");
+    }
+
+    private void safeFilter(SmartApp  smartApp) {
+        // 过滤掉应用内部的敏感配置，ak等设置为null
+        if (null != smartApp && null != smartApp.getExtend()) {
+            smartApp.getExtend().setAccessKey(null);
+        }
     }
 }

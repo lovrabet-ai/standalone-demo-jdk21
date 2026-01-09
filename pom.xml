@@ -21,7 +21,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.encoding>UTF-8</project.encoding>
         <spring-boot.version>3.2.2</spring-boot.version>
-        <lovrabet.version>1.0.0-beta</lovrabet.version>
+        <lovrabet.version>1.0.0</lovrabet.version>
     </properties>
 
     <dependencies>

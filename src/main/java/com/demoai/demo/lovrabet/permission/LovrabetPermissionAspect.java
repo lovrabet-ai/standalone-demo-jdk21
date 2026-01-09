@@ -104,7 +104,7 @@ public class LovrabetPermissionAspect implements ApplicationContextAware {
     }
 
     private Long transertToLong(String keyValue) {
-        GlobalException.ifTrueThenThrow(!StringUtils.isNumeric(keyValue), ErrorCode.YT_PARAMETER_INVALID, "");
+        GlobalException.ifTrueThenThrow(!StringUtils.isNumeric(keyValue), ErrorCode.PARAM_INVALID, "");
         return Long.valueOf(keyValue);
     }
 
@@ -148,7 +148,7 @@ public class LovrabetPermissionAspect implements ApplicationContextAware {
         }
         User user = getCurrentUser();
         String errMsg = String.format("权限不足,非租户管理员,method: %s, userId: %s", proJoinPoint.getSignature().getName(), user.getUserId());
-        throw new GlobalException(errMsg, ErrorCode.NO_SUPER_ADMIN_PERMISSION, CommonExceptionEnum.NO_SUPER_ADMIN_PERMISSION);
+        throw new GlobalException(errMsg, ErrorCode.NO_PERMISSION, CommonExceptionEnum.NO_SUPER_ADMIN_PERMISSION);
     }
 
     /**
@@ -177,7 +177,7 @@ public class LovrabetPermissionAspect implements ApplicationContextAware {
      * @return
      */
     private SmartApp getSmartApp(Object keyValue, PermitKeyTypeEnum resourceType) {
-        GlobalException.ifTrueThenThrow(null == keyValue, ErrorCode.YT_PARAMETER_MISSING, "");
+        GlobalException.ifTrueThenThrow(null == keyValue, ErrorCode.PARAM_MISSING, "");
         String key = String.valueOf(keyValue);
         SmartApp smartApp = null;
         switch (resourceType) {
@@ -186,27 +186,27 @@ public class LovrabetPermissionAspect implements ApplicationContextAware {
                 break;
             case MENU_ID:
                 SmartMenu smartMenu = smartMenuService.findById(transertToLong(key));
-                GlobalException.ifTrueThenThrow(null == smartMenu, ErrorCode.YT_PARAMETER_INVALID, "menuId");
+                GlobalException.ifTrueThenThrow(null == smartMenu, ErrorCode.PARAM_INVALID, "menuId");
                 smartApp = appService.findByAppCode(smartMenu.getAppCode());
                 break;
             case PAGE_ID:
                 SmartPage smartPage = pageService.findById(transertToLong(key));
-                GlobalException.ifTrueThenThrow(null == smartPage, ErrorCode.YT_PARAMETER_INVALID, "pageId");
+                GlobalException.ifTrueThenThrow(null == smartPage, ErrorCode.PARAM_INVALID, "pageId");
                 smartApp = appService.findByAppCode(smartPage.getAppCode());
                 break;
             case DATASET_ID:
                 Dataset dataset = iDatasetService.findById(transertToLong(key));
-                GlobalException.ifTrueThenThrow(null == dataset, ErrorCode.YT_PARAMETER_INVALID, "datasetId");
+                GlobalException.ifTrueThenThrow(null == dataset, ErrorCode.PARAM_INVALID, "datasetId");
                 smartApp = appService.findByAppCode(dataset.getAppCode());
                 break;
             case DATASET_CODE:
                 Dataset datasetInfo = iDatasetService.findByCode(key);
-                GlobalException.ifTrueThenThrow(null == datasetInfo, ErrorCode.YT_PARAMETER_INVALID, "datasetCode");
+                GlobalException.ifTrueThenThrow(null == datasetInfo, ErrorCode.PARAM_INVALID, "datasetCode");
                 smartApp = appService.findByAppCode(datasetInfo.getAppCode());
                 break;
             case PERMIT_ID:
                 Permit permit = permitService.find(transertToLong(key));
-                GlobalException.ifTrueThenThrow(null == permit, ErrorCode.YT_PARAMETER_INVALID, "permitId");
+                GlobalException.ifTrueThenThrow(null == permit, ErrorCode.PARAM_INVALID, "permitId");
                 smartApp = appService.findByAppCode(permit.getAppCode());
                 break;
             default:
@@ -223,7 +223,7 @@ public class LovrabetPermissionAspect implements ApplicationContextAware {
      * @return
      */
     private boolean inReadOnlyWhiteList(Object keyValue, PermitKeyTypeEnum resourceType) {
-        GlobalException.ifTrueThenThrow(null == keyValue, ErrorCode.YT_PARAMETER_MISSING, "");
+        GlobalException.ifTrueThenThrow(null == keyValue, ErrorCode.PARAM_MISSING, "");
         //只读白名单
         DataObject whiteListMap = configProvider.getConfig(DIAMOND_GROUP_LOW_CODE,
                 SMART_APP_PERMISSION_READ_ONLY_WHITELIST, DataObject.class);
