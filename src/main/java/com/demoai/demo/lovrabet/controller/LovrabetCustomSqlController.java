@@ -41,7 +41,7 @@ public class LovrabetCustomSqlController {
     Result<SqlExecResult> executeUserCustomSql(@RequestBody ExecCustomSqlRequest request) {
         try {
             SqlExecResult sqlExecResult = userCustomSqlService.executeCustomSql(request.getId(), request.getSqlCode(),
-                    request.getParams());
+                    request.getParams(), false);
             return Result.success(sqlExecResult);
         } catch (IllegalArgumentException e) {
             ErrorCode failure = ErrorCode.PARAM_INVALID;

@@ -36,4 +36,9 @@ public class LovrabetConfigProperties {
      * 应用平台资源版本号
      */
     private String appPlatformVersion;
+
+    /**
+     * 数据库链接环境
+     */
+    private String dbLinkEnv;
 }
