@@ -29,7 +29,7 @@ lovrabet:
   apiDomain: http://127.0.0.1:8080
   rendererVersion: 1.1.25
   appPlatformVersion: 1.5.12
-  dbLinkEnv: prod # 默认值default，可以按需改成dev、test、pre、prod
+  dbLinkEnv: default # 默认值default，可以按需改成dev、test、pre、prod
 
 logging:
   level:
