@@ -30,6 +30,12 @@ lovrabet:
   rendererVersion: 1.1.25
   appPlatformVersion: 1.5.12
   dbLinkEnv: default # 默认值default，可以按需改成dev、test、pre、prod
+  runtime:
+    js:
+      statement-limit: 1000000 # JS脚本允许执行的最大语句数, 默认100万
+      max-db-calls: 100 # JS脚本单次执行允许的最大DB调用次数
+    backendFunction:
+      enable: true # 是否启用后端函数功能
 
 logging:
   level:
