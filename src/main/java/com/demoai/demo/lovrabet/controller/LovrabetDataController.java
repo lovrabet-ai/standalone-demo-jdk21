@@ -8,6 +8,8 @@ import com.alibaba.fastjson2.JSONObject;
 import com.demoai.demo.lovrabet.permission.LovrabetPermission;
 import com.lovrabet.runtime.model.PermitKeyTypeEnum;
 import com.lovrabet.runtime.model.common.Result;
+import com.lovrabet.runtime.model.dto.AggregateRequest;
+import com.lovrabet.runtime.model.dto.FilterRequest;
 import com.lovrabet.runtime.model.enums.DatasetOperationTypeEnum;
 import com.lovrabet.runtime.service.SmartDataDispatcher;
 import io.swagger.annotations.Api;
@@ -110,6 +112,61 @@ public class LovrabetDataController {
         smartDataDispatcher.checkPageParam(paramMap, DatasetOperationTypeEnum.DELETE, false);
         Result<?> result =  smartDataDispatcher.dataExecute(datasetCode, appCode, DatasetOperationTypeEnum.DELETE, paramMap);
         logResult(appCode, datasetCode, DatasetOperationTypeEnum.DELETE, paramMap);
+        return result;
+    }
+
+    /**
+     * FTP的filter过滤查询,需支持多表关联查询,示例:
+     * {
+     *   select: [
+     *     "id",
+     *     "title",
+     *     "content",
+     *     "create_at",
+     *     "profile.username", // 关联表指定表名，不管有没有重名
+     *     "profile.avatar_url"
+     *   ],
+     *   orderBy: [//注意：是数组
+     *     { "customer_id": "asc" }，
+     *     { "profile.username": "desc" }
+     *   ],
+     *   where: {
+     *     "status": { "$eq": "published" },
+     *     "profile.is_signed": { "$eq": true } //仅签约作家
+     *   },
+     *   "currentPage": 1, //默认值1
+     *   "pageSize": 20
+     * }
+     * @param appCode
+     * @param datasetCode
+     * @param request
+     * @return
+     */
+    @ApiOperation("数据操作-filter")
+    @PostMapping("/{appCode}/{datasetCode}/filter")
+    @LovrabetPermission(key = "@{[appCode]}", keyType = PermitKeyTypeEnum.APP_CODE)
+    public Result<?> filterQuery(@PathVariable("appCode") String appCode, @PathVariable("datasetCode") String datasetCode,
+                                 @RequestBody FilterRequest request) {
+        log.info("data filter, appCode:{}, datasetCode:{}, request:{}", appCode, datasetCode, JSONObject.toJSONString(request));
+
+        Result<?> result =  smartDataDispatcher.filterQuery(datasetCode, appCode, request);
+        return result;
+    }
+
+    /**
+     * 数据聚合查询
+     * @param appCode 应用编码
+     * @param datasetCode 数据集编码
+     * @param request 聚合查询请求参数
+     * @return 聚合查询结果
+     */
+    @ApiOperation("数据操作-aggregate")
+    @PostMapping("/{appCode}/{datasetCode}/aggregate")
+    @LovrabetPermission(key = "@{[appCode]}", keyType = PermitKeyTypeEnum.APP_CODE)
+    public Result<?> aggregateQuery(@PathVariable("appCode") String appCode, @PathVariable("datasetCode") String datasetCode,
+                                    @RequestBody AggregateRequest request) {
+        log.info("data aggregate, appCode:{}, datasetCode:{}, request:{}", appCode, datasetCode, JSONObject.toJSONString(request));
+        Result<?> result =  smartDataDispatcher.aggregateQuery(datasetCode, appCode, request);
         return result;
     }
 
