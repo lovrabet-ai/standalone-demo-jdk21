@@ -28,7 +28,7 @@ lovrabet:
   appCode: app-c2dd52a2
   apiDomain: http://127.0.0.1:8080
   rendererVersion: 1.1.28
-  appPlatformVersion: 1.5.15
+  appPlatformVersion: 1.5.16
   dbLinkEnv: default # 默认值default，可以按需改成dev、test、pre、prod
   runtime:
     js:
