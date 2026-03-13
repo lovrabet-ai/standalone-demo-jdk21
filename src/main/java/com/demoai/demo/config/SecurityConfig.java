@@ -1,5 +1,6 @@
 package com.demoai.demo.config;
 
+import com.demoai.demo.web.filter.JwtAuthenticationFilter;
 import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

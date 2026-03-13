@@ -4,8 +4,11 @@
 
 package com.demoai.demo.config;
 
+import com.demoai.demo.web.filter.WebRequestLoggingFilter;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.core.Ordered;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -19,6 +22,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
+
+    @Bean
+    public FilterRegistrationBean<WebRequestLoggingFilter> webRequestLoggingFilter() {
+        FilterRegistrationBean<WebRequestLoggingFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(new WebRequestLoggingFilter());
+        registrationBean.addUrlPatterns("/*");
+        registrationBean.setOrder(Ordered.LOWEST_PRECEDENCE);
+        return registrationBean;
+    }
 
     @Override
     public void configurePathMatch(PathMatchConfigurer configurer) {

@@ -1,4 +1,4 @@
-package com.demoai.demo.config;
+package com.demoai.demo.web.filter;
 
 import com.demoai.demo.service.JwtService;
 import jakarta.servlet.FilterChain;

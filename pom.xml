@@ -189,6 +189,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
+        </dependency>
         <!-- 添加老版本 swagger 注解依赖以支持现有代码 -->
         <dependency>
             <groupId>io.swagger</groupId>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- 从Spring环境变量中获取日志路径 -->
+    <!--<springProperty scope="context" name="LOG_HOME" source="logging.file.path" defaultValue="./logs"/> -->
+
+    <!-- 控制台输出 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 主应用日志文件 -->
+    <!--
+    <appender name="MAIN_LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/lovrabet-demo.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/lovrabet-demo.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50}.%M\(%F:%L\) - %msg%n</pattern>
+        </encoder>
+    </appender>
+    -->
+
+    <!-- 错误日志专用文件 -->
+    <!--
+    <appender name="ERROR_LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/lovrabet-demo-error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/lovrabet-runtime-error.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>90</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50}.%M\(%F:%L\) - %msg%n%ex</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+    -->
+
+    <!-- BFF-JS脚本日志专用文件 -->
+    <!--
+    <appender name="BFF_SCRIPT_LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/bff_script.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/bff_script.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%X{appCode:-}] [%thread] [%X{scriptName:-}] %-5level - %msg%n</pattern>
+        </encoder>
+    </appender>
+    -->
+
+    <!-- Web请求日志专用文件（消息中已包含 traceId，简化 pattern） -->
+    <!--
+    <appender name="WEB_LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/web_request.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/web_request.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%msg%n</pattern>
+        </encoder>
+    </appender>
+    -->
+
+    <!-- BFF脚本日志专用logger，additivity=false 防止日志向上传播到 root -->
+    <logger name="BFF_SCRIPT_LOGGER" level="INFO" additivity="false">
+        <!-- <appender-ref ref="BFF_SCRIPT_LOG_FILE" />-->
+        <appender-ref ref="CONSOLE" />
+    </logger>
+
+<!-- Web请求日志专用logger，additivity=false 防止日志向上传播到 root -->
+    <logger name="com.demoai.demo.web.filter.WebRequestLoggingFilter" level="INFO" additivity="false">
+        <appender-ref ref="CONSOLE" />
+        <!--<appender-ref ref="WEB_LOG_FILE" />-->
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+        <!--<appender-ref ref="MAIN_LOG_FILE" />-->
+        <!--<appender-ref ref="ERROR_LOG_FILE" />-->
+    </root>
+</configuration>
