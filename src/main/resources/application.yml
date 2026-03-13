@@ -30,6 +30,8 @@ lovrabet:
   rendererVersion: 1.1.29
   appPlatformVersion: 1.5.16
   dbLinkEnv: default # 默认值default，可以按需改成dev、test、pre、prod
+  containsDeleted: true
+  maxBatchSize: 1000
   runtime:
     js:
       statement-limit: 1000000 # JS脚本允许执行的最大语句数, 默认100万
@@ -61,7 +63,7 @@ application:
 
 #---- ^ mybatis-plus 配置 ----#
 mybatis-plus:
-  mapper-locations: classpath:mapper/*.xml
+  mapper-locations: classpath:lovrabet-mapper/*.xml
   config-location: classpath:yt-mybatis-config.xml
   global-config:
     db-config:
