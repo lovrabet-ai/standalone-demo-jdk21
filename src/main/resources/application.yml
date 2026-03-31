@@ -32,6 +32,7 @@ lovrabet:
   dbLinkEnv: default # 默认值default，可以按需改成dev、test、pre、prod
   containsDeleted: true
   maxBatchSize: 1000
+  userIdentityLongType: true
   runtime:
     js:
       statement-limit: 1000000 # JS脚本允许执行的最大语句数, 默认100万
